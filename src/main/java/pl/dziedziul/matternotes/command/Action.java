@@ -1,4 +1,4 @@
-package pl.dziedziul.matternotes.webhook;
+package pl.dziedziul.matternotes.command;
 
 public enum Action {
 	NEW, LIST, CLEAR, UNDO, HELP, FEEDBACK

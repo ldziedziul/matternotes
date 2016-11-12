@@ -1,4 +1,4 @@
-package pl.dziedziul.matternotes.webhook;
+package pl.dziedziul.matternotes.command;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -35,7 +35,7 @@ public class CommandActionExtractorTest {
 		//given
 		CommandActionExtractor sut = new CommandActionExtractor();
 		//when
-		Action result = sut.extractAction(commandWithText(message));
+		Action result = sut.extractAction(message);
 		//then
 		assertThat(result, is(expectedAction));
 	}
@@ -45,15 +45,8 @@ public class CommandActionExtractorTest {
 		//given
 		CommandActionExtractor sut = new CommandActionExtractor();
 		//when
-		Action result = sut.extractAction(commandWithText(null));
+		sut.extractAction(null);
 		//then
 
 	}
-
-	private SlashCommand commandWithText(String message) {
-		SlashCommand slashCommand = new SlashCommand();
-		slashCommand.setText(message);
-		return slashCommand;
-	}
-
 }

@@ -1,4 +1,4 @@
-package pl.dziedziul.matternotes.webhook;
+package pl.dziedziul.matternotes.command;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -6,6 +6,9 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
+
+import pl.dziedziul.matternotes.webhook.SlashCommand;
+import pl.dziedziul.matternotes.webhook.SlashCommandResult;
 
 public class CommandProcessorTest {
 	@Test

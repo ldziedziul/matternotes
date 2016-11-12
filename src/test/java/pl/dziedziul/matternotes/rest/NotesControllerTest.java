@@ -1,4 +1,4 @@
-package pl.dziedziul.matternotes;
+package pl.dziedziul.matternotes.rest;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -14,8 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import pl.dziedziul.matternotes.command.CommandProcessor;
 import pl.dziedziul.matternotes.model.TestDataBuilder;
-import pl.dziedziul.matternotes.webhook.CommandProcessor;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(NotesController.class)

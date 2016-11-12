@@ -1,10 +1,9 @@
-package pl.dziedziul.matternotes.model;
+package pl.dziedziul.matternotes.webhook;
 
 import org.junit.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import pl.dziedziul.matternotes.webhook.SlashCommand;
 
 public class SlashCommandTest {
 

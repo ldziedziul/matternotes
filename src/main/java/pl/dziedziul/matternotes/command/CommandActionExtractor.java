@@ -1,4 +1,4 @@
-package pl.dziedziul.matternotes.webhook;
+package pl.dziedziul.matternotes.command;
 
 import java.util.Arrays;
 
@@ -11,8 +11,7 @@ public class CommandActionExtractor {
 
 	private static final Action DEFAULT_ACTION = Action.HELP;
 
-	public Action extractAction(SlashCommand commandData) {
-		String text = commandData.getText();
+	public Action extractAction(String text) {
 		Assert.notNull(text, "Text in command should be provided");
 		String[] tokens = StringUtils.split(text);
 		if (tokens.length > 0) {

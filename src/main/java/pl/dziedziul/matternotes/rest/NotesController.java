@@ -1,4 +1,4 @@
-package pl.dziedziul.matternotes;
+package pl.dziedziul.matternotes.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.dziedziul.matternotes.webhook.CommandProcessor;
+import pl.dziedziul.matternotes.command.CommandProcessor;
 import pl.dziedziul.matternotes.webhook.SlashCommand;
 import pl.dziedziul.matternotes.webhook.SlashCommandResult;
 
