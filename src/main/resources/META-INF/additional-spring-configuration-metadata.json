@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "matternotes.entry.point.uri",
+      "type": "java.lang.String",
+      "description": "Entry point for matternotes api"
+    }
+  ]
+}

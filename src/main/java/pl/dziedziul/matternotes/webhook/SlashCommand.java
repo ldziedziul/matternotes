@@ -180,4 +180,90 @@ public class SlashCommand implements Serializable {
 			.append("userName", userName)
 			.toString();
 	}
+
+
+	public static final class Builder {
+		private String channelId;
+		private String channelName;
+		private String command;
+		private String responseUrl;
+		private String teamDomain;
+		private String teamId;
+		private String text;
+		private String token;
+		private String userId;
+		private String userName;
+
+		private Builder() {
+		}
+
+		public static Builder newSlashCommand() {
+			return new Builder();
+		}
+
+		public Builder channelId(String channelId) {
+			this.channelId = channelId;
+			return this;
+		}
+
+		public Builder channelName(String channelName) {
+			this.channelName = channelName;
+			return this;
+		}
+
+		public Builder command(String command) {
+			this.command = command;
+			return this;
+		}
+
+		public Builder responseUrl(String responseUrl) {
+			this.responseUrl = responseUrl;
+			return this;
+		}
+
+		public Builder teamDomain(String teamDomain) {
+			this.teamDomain = teamDomain;
+			return this;
+		}
+
+		public Builder teamId(String teamId) {
+			this.teamId = teamId;
+			return this;
+		}
+
+		public Builder text(String text) {
+			this.text = text;
+			return this;
+		}
+
+		public Builder token(String token) {
+			this.token = token;
+			return this;
+		}
+
+		public Builder userId(String userId) {
+			this.userId = userId;
+			return this;
+		}
+
+		public Builder userName(String userName) {
+			this.userName = userName;
+			return this;
+		}
+
+		public SlashCommand build() {
+			SlashCommand slashCommand = new SlashCommand();
+			slashCommand.setChannelId(channelId);
+			slashCommand.setChannelName(channelName);
+			slashCommand.setCommand(command);
+			slashCommand.setResponseUrl(responseUrl);
+			slashCommand.setTeamDomain(teamDomain);
+			slashCommand.setTeamId(teamId);
+			slashCommand.setText(text);
+			slashCommand.setToken(token);
+			slashCommand.setUserId(userId);
+			slashCommand.setUserName(userName);
+			return slashCommand;
+		}
+	}
 }

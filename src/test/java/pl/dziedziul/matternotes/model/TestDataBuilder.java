@@ -1,6 +1,7 @@
 package pl.dziedziul.matternotes.model;
 
 import pl.dziedziul.matternotes.webhook.ResponseType;
+import pl.dziedziul.matternotes.webhook.SlashCommand;
 import pl.dziedziul.matternotes.webhook.SlashCommandResult;
 
 public final class TestDataBuilder {
@@ -24,6 +25,25 @@ public final class TestDataBuilder {
 			.responseType(ResponseType.IN_CHANNEL)
 			.text("some text")
 			.build();
+	}
+
+	public SlashCommand validSlashCommand(String firstWord) {
+		return SlashCommand.Builder.newSlashCommand()
+			.channelId("some-channel-id")
+			.channelName("some channel name")
+			.command("/some-command")
+			.responseUrl("some-response-url")
+			.teamDomain("some-team-domain")
+			.teamId("some-team-id")
+			.text(firstWord + " sample text")
+			.token("some-token")
+			.userId("some-user-id")
+			.userName("some user name")
+			.build();
+	}
+
+	public SlashCommand validSlashCommand() {
+		return validSlashCommand("Some");
 	}
 
 	public static TestDataBuilder getInstance() {

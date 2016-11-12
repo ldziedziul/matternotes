@@ -33,9 +33,12 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile("org.apache.commons:commons-lang3:$commonsLang3Version")
+    compileOnly("org.springframework.boot:spring-boot-configuration-processor")
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile("nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}")
     testCompile("com.tngtech.java:junit-dataprovider:${junitDataProviderVersion}")
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('com.h2database:h2')
 }
+
+compileJava.dependsOn(processResources)
