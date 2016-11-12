@@ -3,6 +3,7 @@ buildscript {
         springBootVersion = '1.4.1.RELEASE'
         equalsVerifierVersion = "2.1.6"
         commonsLang3Version = "3.5"
+        junitDataProviderVersion = "1.9.4"
     }
     repositories {
         mavenCentral()
@@ -34,6 +35,7 @@ dependencies {
     compile("org.apache.commons:commons-lang3:$commonsLang3Version")
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile("nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}")
+    testCompile("com.tngtech.java:junit-dataprovider:${junitDataProviderVersion}")
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('com.h2database:h2')
 }
