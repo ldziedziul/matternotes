@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import pl.dziedziul.matternotes.command.CommandProcessor;
-import pl.dziedziul.matternotes.model.TestDataBuilder;
+import pl.dziedziul.matternotes.domain.TestDataBuilder;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(NotesController.class)

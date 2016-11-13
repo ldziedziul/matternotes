@@ -8,7 +8,7 @@ import org.junit.Test;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import pl.dziedziul.matternotes.mapper.JsonMapper;
-import pl.dziedziul.matternotes.model.TestDataBuilder;
+import pl.dziedziul.matternotes.domain.TestDataBuilder;
 
 public class SlashCommandResultTest {
 

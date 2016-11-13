@@ -1,4 +1,4 @@
-package pl.dziedziul.matternotes.model;
+package pl.dziedziul.matternotes.domain;
 
 import pl.dziedziul.matternotes.webhook.ResponseType;
 import pl.dziedziul.matternotes.webhook.SlashCommand;

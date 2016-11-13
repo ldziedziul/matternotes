@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import pl.dziedziul.matternotes.command.handler.CommandHandler;
-import pl.dziedziul.matternotes.model.TestDataBuilder;
+import pl.dziedziul.matternotes.domain.TestDataBuilder;
 import pl.dziedziul.matternotes.webhook.SlashCommand;
 import pl.dziedziul.matternotes.webhook.SlashCommandResult;
 
