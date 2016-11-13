@@ -11,6 +11,7 @@ public class SlashCommandTest {
 	public void shouldFulfillEqualsContract() {
 		EqualsVerifier.forClass(SlashCommand.class)
 			.suppress(Warning.NONFINAL_FIELDS)
+			.suppress(Warning.ALL_FIELDS_SHOULD_BE_USED)
 			.withRedefinedSuperclass()
 			.suppress(Warning.STRICT_INHERITANCE)
 			.verify();

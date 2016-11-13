@@ -7,6 +7,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import pl.dziedziul.matternotes.command.Action;
+
 public class SlashCommand implements Serializable {
 	private String channelId;
 	private String channelName;
@@ -18,6 +20,7 @@ public class SlashCommand implements Serializable {
 	private String token;
 	private String userId;
 	private String userName;
+	private Action action;
 
 	public String getChannelId() {
 		return channelId;
@@ -125,6 +128,14 @@ public class SlashCommand implements Serializable {
 
 	public void setUser_name(String userName) {
 		setUserName(userName);
+	}
+
+	public Action getAction() {
+		return action;
+	}
+
+	public void setAction(Action action) {
+		this.action = action;
 	}
 
 	@Override
