@@ -44,7 +44,7 @@ public class HelpCommandHandlerTest {
 		//when
 		SlashCommandResult result = sut.handle(mock(SlashCommand.class));
 		//then
-		assertThat(result.getText(), org.hamcrest.Matchers.containsString("/notes"));
+		assertThat(result.getText(), containsString("/notes"));
 		assertThat(result.getResponseType(), is(ResponseType.EPHEMERAL));
 	}
 
