@@ -1,15 +1,9 @@
 buildscript {
-    ext {
-        springBootVersion = '1.4.1.RELEASE'
-        equalsVerifierVersion = "2.1.6"
-        commonsLang3Version = "3.5"
-        junitDataProviderVersion = "1.9.4"
-    }
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version")
     }
 }
 
@@ -32,11 +26,11 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile("org.apache.commons:commons-lang3:$commonsLang3Version")
+    compile("org.apache.commons:commons-lang3:$commons_lang3_version")
     compileOnly("org.springframework.boot:spring-boot-configuration-processor")
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile("nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}")
-    testCompile("com.tngtech.java:junit-dataprovider:${junitDataProviderVersion}")
+    testCompile("nl.jqno.equalsverifier:equalsverifier:$equals_verifier_version")
+    testCompile("com.tngtech.java:junit-dataprovider:$junit_data_provider_version")
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('com.h2database:h2')
 }
