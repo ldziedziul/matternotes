@@ -1,5 +1,7 @@
 package pl.dziedziul.matternotes.webhook;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
@@ -7,12 +9,12 @@ public enum ResponseType {
 	IN_CHANNEL, EPHEMERAL;
 
 	@JsonCreator
-	public static ResponseType fromString(String key) {
-		return key == null ? null : ResponseType.valueOf(key.toUpperCase());
+	static ResponseType fromString(String key) {
+		return StringUtils.isBlank(key) ? null : ResponseType.valueOf(key.toUpperCase());
 	}
 
 	@JsonValue
-	public String toJson() {
+	String toJson() {
 		return name().toLowerCase();
 	}
 }
