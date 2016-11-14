@@ -19,7 +19,7 @@ public class SlashCommand implements Serializable {
 	private String text;
 	private String token;
 	private String userId;
-	private String userName;
+	private String username;
 	private Action action;
 
 	public String getChannelId() {
@@ -118,16 +118,16 @@ public class SlashCommand implements Serializable {
 		setUserId(userId);
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public void setUser_name(String userName) {
-		setUserName(userName);
+		setUsername(userName);
 	}
 
 	public Action getAction() {
@@ -156,7 +156,7 @@ public class SlashCommand implements Serializable {
 			.append(text, command1.text)
 			.append(token, command1.token)
 			.append(userId, command1.userId)
-			.append(userName, command1.userName)
+			.append(username, command1.username)
 			.isEquals();
 	}
 
@@ -172,7 +172,7 @@ public class SlashCommand implements Serializable {
 			.append(text)
 			.append(token)
 			.append(userId)
-			.append(userName)
+			.append(username)
 			.toHashCode();
 	}
 
@@ -188,7 +188,7 @@ public class SlashCommand implements Serializable {
 			.append("text", text)
 			.append("token", token)
 			.append("userId", userId)
-			.append("userName", userName)
+			.append("username", username)
 			.toString();
 	}
 
@@ -273,7 +273,7 @@ public class SlashCommand implements Serializable {
 			slashCommand.setText(text);
 			slashCommand.setToken(token);
 			slashCommand.setUserId(userId);
-			slashCommand.setUserName(userName);
+			slashCommand.setUsername(userName);
 			return slashCommand;
 		}
 	}

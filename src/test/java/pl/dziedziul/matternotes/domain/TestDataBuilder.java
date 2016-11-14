@@ -27,7 +27,7 @@ public final class TestDataBuilder {
 			.build();
 	}
 
-	public SlashCommand validSlashCommand(String firstWord) {
+	private SlashCommand validSlashCommand(String firstWord) {
 		return SlashCommand.Builder.newSlashCommand()
 			.channelId("some-channel-id")
 			.channelName("some channel name")
@@ -48,5 +48,24 @@ public final class TestDataBuilder {
 
 	public static TestDataBuilder getInstance() {
 		return new TestDataBuilder();
+	}
+
+	public Note createValidNote(String name, String userId, NoteType type) {
+		Message message = new Message();
+		message.setText("message-" + name);
+
+		Note note = new Note();
+		note.setType(type);
+		note.setUsername("some username");
+		note.setUserId(userId);
+		note.setTitle("title-" + name);
+		note.addMessage(message);
+		note.setChannelId("channelId-" + name);
+		note.setChannelName("channelName-" + name);
+		return note;
+	}
+
+	public Note createValidNote(NoteType type) {
+		return createValidNote("1", "some-user-id", type);
 	}
 }
