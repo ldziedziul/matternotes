@@ -13,12 +13,14 @@ import org.junit.Test;
 
 import pl.dziedziul.matternotes.command.handler.CommandHandler;
 import pl.dziedziul.matternotes.domain.TestDataBuilder;
+import pl.dziedziul.matternotes.webhook.ResponseType;
 import pl.dziedziul.matternotes.webhook.SlashCommand;
 import pl.dziedziul.matternotes.webhook.SlashCommandResult;
 
 public class CommandProcessorTest {
 
 	private CommandActionExtractor actionExtractor;
+	private TestDataBuilder testDataBuilder = TestDataBuilder.getInstance();
 
 	@Before
 	public void setup() {
@@ -26,8 +28,8 @@ public class CommandProcessorTest {
 		when(actionExtractor.extractAction(any())).thenReturn(Action.ABOUT);
 	}
 
-	@Test(expected = IllegalStateException.class)
-	public void shouldFailWithoutSupportingHandler() throws Exception {
+	@Test
+	public void shouldFallbackWithoutSupportingHandler() throws Exception {
 		//given
 		CommandHandler handler1 = mock(CommandHandler.class);
 		when(handler1.isSupporting(any())).thenReturn(false);
@@ -35,9 +37,10 @@ public class CommandProcessorTest {
 		when(handler2.isSupporting(any())).thenReturn(false);
 		CommandProcessor sut = new CommandProcessor(actionExtractor, Arrays.asList(handler2, handler1));
 		//when
-		SlashCommandResult result = sut.process(mock(SlashCommand.class));
+		SlashCommandResult result = sut.process(testDataBuilder.validSlashCommand());
 		//then
-		//should fail
+		assertThat(result.getText(), is("Unknown command: Some sample text"));
+		assertThat(result.getResponseType(), is(ResponseType.EPHEMERAL));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -58,14 +61,14 @@ public class CommandProcessorTest {
 		//should fail
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void shouldAllowForEmptyHandlersList() throws Exception {
 		//given
-		//when
 		CommandProcessor sut = new CommandProcessor(actionExtractor, Collections.emptyList());
+		//when
+		SlashCommandResult result = sut.process(testDataBuilder.validSlashCommand());
 		//then
-		//should not fail
-		sut.process(mock(SlashCommand.class));
+		assertThat(result.getText(), is("Unknown command: Some sample text"));
 	}
 
 	@Test
@@ -75,7 +78,7 @@ public class CommandProcessorTest {
 		when(handler1.isSupporting(any())).thenReturn(false);
 		CommandHandler handler2 = mock(CommandHandler.class);
 		when(handler2.isSupporting(any())).thenReturn(true);
-		SlashCommandResult expectedCommandResult = TestDataBuilder.getInstance().validSlashCommandResult();
+		SlashCommandResult expectedCommandResult = testDataBuilder.validSlashCommandResult();
 		when(handler2.handle(any())).thenReturn(expectedCommandResult);
 		CommandProcessor sut = new CommandProcessor(actionExtractor, Arrays.asList(handler1, handler2));
 		//when

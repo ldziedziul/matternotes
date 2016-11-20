@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import pl.dziedziul.matternotes.command.handler.CommandHandler;
+import pl.dziedziul.matternotes.command.handler.FallbackCommandHandler;
 import pl.dziedziul.matternotes.webhook.SlashCommand;
 import pl.dziedziul.matternotes.webhook.SlashCommandResult;
 
@@ -16,14 +17,15 @@ public class CommandProcessor {
 	private static final Logger log = LoggerFactory.getLogger(CommandProcessor.class);
 
 	private final List<CommandHandler> commandHandlers;
-
 	private final CommandActionExtractor commandActionExtractor;
+	private final FallbackCommandHandler fallbackCommandHandler;
 
 	public CommandProcessor(CommandActionExtractor commandActionExtractor, List<CommandHandler> commandHandlers) {
 		Assert.notNull(commandActionExtractor, "Action extractour should be provided");
 		Assert.notNull(commandHandlers, "Command handler should be provided");
 		this.commandActionExtractor = commandActionExtractor;
 		this.commandHandlers = commandHandlers;
+		fallbackCommandHandler = new FallbackCommandHandler();
 	}
 
 	public SlashCommandResult process(SlashCommand command) {
@@ -37,6 +39,6 @@ public class CommandProcessor {
 		return commandHandlers.stream()
 			.filter(h -> h.isSupporting(command))
 			.findFirst()
-			.orElseThrow(() -> new IllegalStateException("Handler not found"));
+			.orElse(fallbackCommandHandler);
 	}
 }
