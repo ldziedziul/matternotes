@@ -35,13 +35,13 @@ public class NoteService {
 	}
 
 	private Optional<Note> findNote(NoteSearchParams searchParams) {
-		Optional<Note> persistetNote;
+		Optional<Note> persistedNote;
 		if (searchParams.getType().equals(NoteType.CHANNEL)) {
-			persistetNote = noteRepository.findByChannelIdAndUserIdAndType(searchParams.getChannelId(), searchParams.getUserId(), searchParams.getType());
+			persistedNote = noteRepository.findByChannelIdAndUserIdAndType(searchParams.getChannelId(), searchParams.getUserId(), searchParams.getType());
 		} else {
-			persistetNote = noteRepository.findByTitleAndUserIdAndType(searchParams.getTitle(), searchParams.getUserId(), searchParams.getType());
+			persistedNote = noteRepository.findByTitleAndUserIdAndType(searchParams.getTitle(), searchParams.getUserId(), searchParams.getType());
 		}
-		return persistetNote;
+		return persistedNote;
 	}
 
 	@Transactional(readOnly = true)
