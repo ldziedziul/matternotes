@@ -7,8 +7,8 @@ import org.junit.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import pl.dziedziul.matternotes.mapper.JsonMapper;
 import pl.dziedziul.matternotes.domain.TestDataBuilder;
+import pl.dziedziul.matternotes.mapper.JsonMapper;
 
 public class SlashCommandResultTest {
 
@@ -52,5 +52,18 @@ public class SlashCommandResultTest {
 			.withRedefinedSuperclass()
 			.suppress(Warning.STRICT_INHERITANCE)
 			.verify();
+	}
+
+	@Test
+	public void shouldToString() throws Exception {
+		//given
+		SlashCommandResult slashCommandResult = SlashCommandResult.Builder.newSlashCommandResult("some text")
+			.gotoLocation("some-location")
+			.responseType(ResponseType.IN_CHANNEL)
+			.build();
+		//when
+		//then
+		assertThat(slashCommandResult.toString(), is("SlashCommandResult[responseType=IN_CHANNEL,text=some text,gotoLocation=some-location]"));
+
 	}
 }

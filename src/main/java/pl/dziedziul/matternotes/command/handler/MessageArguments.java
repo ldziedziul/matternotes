@@ -5,12 +5,15 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.util.Assert;
 
 public class MessageArguments {
 	private String text;
 	private String title;
 
 	public MessageArguments(String title, String text) {
+		Assert.notNull(title, "Null for title isn't allowed");
+		Assert.notNull(text, "Null for text isn't allowed");
 		this.text = text;
 		this.title = title;
 	}

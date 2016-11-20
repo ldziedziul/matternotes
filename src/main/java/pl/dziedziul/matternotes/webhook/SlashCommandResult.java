@@ -82,7 +82,7 @@ public class SlashCommandResult {
 		private String gotoLocation;
 
 		private Builder(String text) {
-			this.text = text;
+			text(text);
 		}
 
 		public static Builder newSlashCommandResult(String text) {
