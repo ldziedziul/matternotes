@@ -18,8 +18,8 @@ public class CommandActionExtractorTest {
 		return new Object[][] {
 			{ "my private note Records", Action.NEW }, //
 			{ "[title] my private note Records", Action.NEW }, //
-			{ "list", Action.LIST }, //
-			{ "list all", Action.LIST }, //
+			{ "show", Action.SHOW }, //
+			{ "show all", Action.SHOW }, //
 			{ "clear", Action.CLEAR }, //
 			{ "undo", Action.UNDO }, //
 			{ "undo [title]", Action.UNDO }, //

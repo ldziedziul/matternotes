@@ -22,9 +22,9 @@ public class MessageArgumentParserTest {
 			{ "[title with spaces] my private note", new MessageArguments("title with spaces", "my private note") },//
 			{ "[] my private note", new MessageArguments("", "my private note") },//
 			{ "", new MessageArguments("", "") },//
-			{ "list", new MessageArguments("", "") },//
-			{ "list [title]", new MessageArguments("title", "") },//
-			{ "list all", new MessageArguments("", "all") },//
+			{ "show", new MessageArguments("", "") },//
+			{ "show [title]", new MessageArguments("title", "") },//
+			{ "show all", new MessageArguments("", "all") },//
 			{ "clear", new MessageArguments("", "") },//
 			{ "clear [title]", new MessageArguments("title", "") },//
 			{ "undo", new MessageArguments("", "") },//

@@ -56,7 +56,7 @@ public class NewCommandHandler extends ActionBasedCommandHandler {
 	}
 
 	private String createReadCommand(Note note) {
-		return note.getType().equals(NoteType.CHANNEL) ? "/notes list" : "/notes list [" + note.getTitle() + "]";
+		return note.getType().equals(NoteType.CHANNEL) ? "/notes show" : "/notes show [" + note.getTitle() + "]";
 	}
 
 	private Note createNote(SlashCommand command) {

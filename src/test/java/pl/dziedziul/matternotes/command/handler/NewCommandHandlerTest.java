@@ -20,7 +20,7 @@ public class NewCommandHandlerTest {
 	private NewCommandHandler sut = new NewCommandHandler(noteService, messageArgumentParser);
 
 	@Test
-	public void shouldSupportedHelpAction() throws Exception {
+	public void shouldSupportNewAction() throws Exception {
 		//given
 		//when
 		SlashCommand command = mock(SlashCommand.class);
@@ -31,7 +31,7 @@ public class NewCommandHandlerTest {
 	}
 
 	@Test
-	public void shouldNotSupportedOtherAction() throws Exception {
+	public void shouldNotSupportOtherAction() throws Exception {
 		//given
 		//when
 		SlashCommand command = mock(SlashCommand.class);
@@ -49,7 +49,7 @@ public class NewCommandHandlerTest {
 		//when
 		SlashCommandResult result = sut.handle(mock(SlashCommand.class));
 		//then
-		assertThat(result.getText(), is(":pencil: Note created. Run `/notes list [title]` to read it"));
+		assertThat(result.getText(), is(":pencil: Note created. Run `/notes show [title]` to read it"));
 		assertThat(result.getResponseType(), is(ResponseType.EPHEMERAL));
 	}
 
@@ -62,7 +62,7 @@ public class NewCommandHandlerTest {
 		//when
 		SlashCommandResult result = sut.handle(mock(SlashCommand.class));
 		//then
-		assertThat(result.getText(), is(":pencil: Note created. Run `/notes list` to read it"));
+		assertThat(result.getText(), is(":pencil: Note created. Run `/notes show` to read it"));
 		assertThat(result.getResponseType(), is(ResponseType.EPHEMERAL));
 	}
 
@@ -75,7 +75,7 @@ public class NewCommandHandlerTest {
 		//when
 		SlashCommandResult result = sut.handle(mock(SlashCommand.class));
 		//then
-		assertThat(result.getText(), is(":pencil: Note updated. Run `/notes list [title]` to read it"));
+		assertThat(result.getText(), is(":pencil: Note updated. Run `/notes show [title]` to read it"));
 		assertThat(result.getResponseType(), is(ResponseType.EPHEMERAL));
 	}
 
@@ -88,7 +88,7 @@ public class NewCommandHandlerTest {
 		//when
 		SlashCommandResult result = sut.handle(mock(SlashCommand.class));
 		//then
-		assertThat(result.getText(), is(":pencil: Note updated. Run `/notes list` to read it"));
+		assertThat(result.getText(), is(":pencil: Note updated. Run `/notes show` to read it"));
 		assertThat(result.getResponseType(), is(ResponseType.EPHEMERAL));
 	}
 
