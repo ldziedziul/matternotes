@@ -14,6 +14,10 @@ public class SlashCommandResult {
 	@JsonProperty("goto_location")
 	private String gotoLocation;
 
+	public SlashCommandResult(@JsonProperty("text") String text) {
+		this.text = text;
+	}
+
 	public ResponseType getResponseType() {
 		return responseType;
 	}
@@ -77,11 +81,12 @@ public class SlashCommandResult {
 		private String text;
 		private String gotoLocation;
 
-		private Builder() {
+		private Builder(String text) {
+			this.text = text;
 		}
 
-		public static Builder newSlashCommandResult() {
-			return new Builder();
+		public static Builder newSlashCommandResult(String text) {
+			return new Builder(text);
 		}
 
 		public Builder responseType(ResponseType responseType) {
@@ -100,9 +105,8 @@ public class SlashCommandResult {
 		}
 
 		public SlashCommandResult build() {
-			SlashCommandResult slashCommandResult = new SlashCommandResult();
+			SlashCommandResult slashCommandResult = new SlashCommandResult(text);
 			slashCommandResult.setResponseType(responseType);
-			slashCommandResult.setText(text);
 			slashCommandResult.setGotoLocation(gotoLocation);
 			return slashCommandResult;
 		}

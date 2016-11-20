@@ -28,9 +28,7 @@ public class NewCommandHandler extends ActionBasedCommandHandler {
 		Note note = createNote(command);
 		UpsertNoteResult result = noteService.upsertNote(note);
 		String resultMessage = createResultMessage(note, result);
-		SlashCommandResult commandResult = new SlashCommandResult();
-		commandResult.setText(resultMessage);
-		return commandResult;
+		return new SlashCommandResult(resultMessage);
 	}
 
 	private String createResultMessage(Note note, UpsertNoteResult result) {
