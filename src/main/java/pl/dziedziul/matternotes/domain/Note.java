@@ -3,7 +3,6 @@ package pl.dziedziul.matternotes.domain;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.util.Assert;
 
 @Entity
 public class Note extends AbstractEntity {
@@ -123,12 +123,6 @@ public class Note extends AbstractEntity {
 		this.channelId = channelId;
 	}
 
-	public String getText() {
-		return messages.stream()
-			.map(Message::getText)
-			.collect(Collectors.joining(System.lineSeparator()));
-	}
-
 	public String getUserId() {
 		return userId;
 	}
@@ -144,14 +138,16 @@ public class Note extends AbstractEntity {
 	}
 
 	public void deleteLastMessage() {
-		if (messages.isEmpty()) {
-			log.warn("Trying to remove message from empty note");
-		} else {
-			messages.remove(messages.size() - 1);
-		}
+		assertPresentMessages();
+		messages.remove(messages.size() - 1);
 	}
 
 	public Message getLastMessage() {
+		assertPresentMessages();
 		return messages.get(messages.size() - 1);
+	}
+
+	private void assertPresentMessages() {
+		Assert.state(!messages.isEmpty(), "There should be at least one message in the note");
 	}
 }
