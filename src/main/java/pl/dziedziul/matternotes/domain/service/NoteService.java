@@ -53,6 +53,7 @@ public class NoteService {
 		return noteRepository.findAllByUserIdOrderByTitle(userId);
 	}
 
+	@Transactional
 	public void deleteByExample(NoteSearchParams searchParams) {
 		findNote(searchParams).ifPresent(noteRepository::delete);
 	}
