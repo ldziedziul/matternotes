@@ -46,7 +46,7 @@ public class ClearCommandHandlerTest {
 		//when
 		SlashCommandResult result = sut.handle(mock(SlashCommand.class));
 		//then
-		assertThat(result.getText(), is("All your notes from [some-title] have been removed"));
+		assertThat(result.getText(), is("All your notes from *[some-title]* have been removed"));
 		assertThat(result.getResponseType(), is(ResponseType.EPHEMERAL));
 	}
 
@@ -59,7 +59,7 @@ public class ClearCommandHandlerTest {
 		//when
 		SlashCommandResult result = sut.handle(slashCommand);
 		//then
-		assertThat(result.getText(), is("All your notes from some-channel-name have been removed"));
+		assertThat(result.getText(), is("All your notes from *some-channel-name* have been removed"));
 		assertThat(result.getResponseType(), is(ResponseType.EPHEMERAL));
 	}
 }

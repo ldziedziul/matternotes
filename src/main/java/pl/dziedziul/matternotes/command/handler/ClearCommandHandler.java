@@ -28,7 +28,7 @@ public class ClearCommandHandler extends ActionBasedCommandHandler {
 		searchParams.setType(args.hasTitle() ? NoteType.TITLED : NoteType.CHANNEL);
 		searchParams.setChannelId(command.getChannelId());
 		noteService.deleteByExample(searchParams);
-		String text = "All your notes from " + getName(command, args) + " have been removed";
+		String text = "All your notes from *" + getName(command, args) + "* have been removed";
 		return new SlashCommandResult(text);
 	}
 
