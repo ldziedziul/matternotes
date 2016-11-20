@@ -120,4 +120,29 @@ public class NoteServiceTest {
 		when(noteRepository.findByTitleAndUserIdAndType(any(), any(), eq(NoteType.TITLED))).thenReturn(Optional.of(persistedNote));
 		return persistedNote;
 	}
+
+	@Test
+	public void shouldDeleteNote() throws Exception {
+		//given
+		NoteRepository noteRepository = mock(NoteRepository.class);
+		NoteService noteService = new NoteService(noteRepository);
+		Note persistedNote = setupPersistedChannelNote(noteRepository);
+		//when
+		noteService.deleteByExample(createNoteSearchParams(NoteType.CHANNEL));
+		//then
+		verify(noteRepository).delete(persistedNote);
+	}
+
+	@Test
+	public void shouldIgnoreNonexistingNote() throws Exception {
+		//given
+		NoteRepository noteRepository = mock(NoteRepository.class);
+		NoteService noteService = new NoteService(noteRepository);
+		when(noteRepository.findByChannelIdAndUserIdAndType(any(), any(), eq(NoteType.CHANNEL))).thenReturn(Optional.empty());
+		//when
+		noteService.deleteByExample(createNoteSearchParams(NoteType.CHANNEL));
+		//then
+		verify(noteRepository).findByChannelIdAndUserIdAndType(any(), any(), any());
+		verifyNoMoreInteractions(noteRepository);
+	}
 }

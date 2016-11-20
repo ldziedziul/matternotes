@@ -52,4 +52,8 @@ public class NoteService {
 	public List<Note> getAllNotes(String userId) {
 		return noteRepository.findAllByUserIdOrderByTitle(userId);
 	}
+
+	public void deleteByExample(NoteSearchParams searchParams) {
+		findNote(searchParams).ifPresent(noteRepository::delete);
+	}
 }
