@@ -22,6 +22,13 @@ public class Message extends AbstractEntity {
 	@NotNull
 	private String text;
 
+	public Message(String text) {
+		this.text = text;
+	}
+
+	protected Message() {
+	}
+
 	public Note getNote() {
 		return note;
 	}

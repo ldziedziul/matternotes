@@ -24,7 +24,7 @@ public class NoteServiceTest {
 		NoteService noteService = new NoteService(noteRepository);
 		when(noteRepository.findByTitleAndUserIdAndType(any(), any(), eq(NoteType.TITLED))).thenReturn(Optional.empty());
 		//when
-		Note noteToSave = testDataBuilder.createValidNote(NoteType.TITLED);
+		Note noteToSave = testDataBuilder.createValidNoteWithSingleMessage(NoteType.TITLED);
 		UpsertNoteResult result = noteService.upsertNote(noteToSave);
 		//then
 		assertThat(result, is(UpsertNoteResult.INSERTED));
@@ -40,7 +40,7 @@ public class NoteServiceTest {
 		assertThat(persistedNote.getMessages(), is(empty()));
 		when(noteRepository.findByTitleAndUserIdAndType(any(), any(), eq(NoteType.TITLED))).thenReturn(Optional.of(persistedNote));
 		//when
-		Note noteToSave = testDataBuilder.createValidNote(NoteType.TITLED);
+		Note noteToSave = testDataBuilder.createValidNoteWithSingleMessage(NoteType.TITLED);
 		UpsertNoteResult result = noteService.upsertNote(noteToSave);
 		//then
 		assertThat(result, is(UpsertNoteResult.UPDATED));
@@ -54,7 +54,7 @@ public class NoteServiceTest {
 		NoteService noteService = new NoteService(noteRepository);
 		when(noteRepository.findByChannelIdAndUserIdAndType(any(), any(), eq(NoteType.CHANNEL))).thenReturn(Optional.empty());
 		//when
-		Note noteToSave = testDataBuilder.createValidNote(NoteType.CHANNEL);
+		Note noteToSave = testDataBuilder.createValidNoteWithSingleMessage(NoteType.CHANNEL);
 		UpsertNoteResult result = noteService.upsertNote(noteToSave);
 		//then
 		assertThat(result, is(UpsertNoteResult.INSERTED));

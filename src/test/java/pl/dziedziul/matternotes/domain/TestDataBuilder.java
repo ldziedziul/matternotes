@@ -20,10 +20,9 @@ public final class TestDataBuilder {
 	}
 
 	public SlashCommandResult validSlashCommandResult() {
-		return SlashCommandResult.Builder.newSlashCommandResult()
+		return SlashCommandResult.Builder.newSlashCommandResult("some text")
 			.gotoLocation("http://example.com")
 			.responseType(ResponseType.IN_CHANNEL)
-			.text("some text")
 			.build();
 	}
 
@@ -50,22 +49,29 @@ public final class TestDataBuilder {
 		return new TestDataBuilder();
 	}
 
-	public Note createValidNote(String name, String userId, NoteType type) {
-		Message message = new Message();
-		message.setText("message-" + name);
-
+	public Note createValidNoteWithSingleMessage(String name, String userId, NoteType type) {
 		Note note = new Note();
 		note.setType(type);
 		note.setUsername("some username");
 		note.setUserId(userId);
 		note.setTitle("title-" + name);
-		note.addMessage(message);
+		note.addMessage("message-" + name);
 		note.setChannelId("channelId-" + name);
 		note.setChannelName("channelName-" + name);
 		return note;
 	}
 
-	public Note createValidNote(NoteType type) {
-		return createValidNote("1", "some-user-id", type);
+	public Note createValidNoteWithSingleMessage(NoteType type) {
+		return createValidNoteWithSingleMessage("1", "some-user-id", type);
+	}
+
+	public Note createValidNoteWith2Messages(String name, String userId, NoteType type) {
+		Note note = createValidNoteWithSingleMessage(name, userId, type);
+		note.addMessage("second message");
+		return note;
+	}
+
+	public Note createValidNoteWith2Message(NoteType type) {
+		return createValidNoteWith2Messages("1", "some-user-id", type);
 	}
 }

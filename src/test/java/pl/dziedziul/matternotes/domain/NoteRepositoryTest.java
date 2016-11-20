@@ -25,7 +25,7 @@ public class NoteRepositoryTest {
 		//given
 		assertNotesCount(0);
 
-		Note note = testDataBuilder.createValidNote("1", "some-user-id", NoteType.CHANNEL);
+		Note note = testDataBuilder.createValidNoteWithSingleMessage("1", "some-user-id", NoteType.CHANNEL);
 		//when
 		save(note);
 		//then
@@ -125,12 +125,13 @@ public class NoteRepositoryTest {
 	}
 
 	private void prepareSampleNotes() {
-		save(testDataBuilder.createValidNote("1", "some-user-id", NoteType.CHANNEL));
-		save(testDataBuilder.createValidNote("1", "some-user-id", NoteType.TITLED));
-		save(testDataBuilder.createValidNote("1", "some-other-user-id", NoteType.TITLED));
-		save(testDataBuilder.createValidNote("2", "some-user-id", NoteType.TITLED));
-		save(testDataBuilder.createValidNote("2", "some-user-id", NoteType.CHANNEL));
-		save(testDataBuilder.createValidNote("2", "some-other-user-id", NoteType.CHANNEL));
+		save(testDataBuilder.createValidNoteWithSingleMessage("1", "some-user-id", NoteType.CHANNEL));
+		save(testDataBuilder.createValidNoteWithSingleMessage("1", "some-user-id", NoteType.TITLED));
+		save(testDataBuilder.createValidNoteWithSingleMessage("1", "some-other-user-id", NoteType.TITLED));
+		save(testDataBuilder.createValidNoteWithSingleMessage("2", "some-user-id", NoteType.TITLED));
+		save(testDataBuilder.createValidNoteWithSingleMessage("2", "some-user-id", NoteType.CHANNEL));
+		save(testDataBuilder.createValidNoteWithSingleMessage("2", "some-other-user-id", NoteType.CHANNEL));
+		save(testDataBuilder.createValidNoteWith2Messages("3", "some-user-id", NoteType.CHANNEL));
 	}
 
 	private void save(Note note) {

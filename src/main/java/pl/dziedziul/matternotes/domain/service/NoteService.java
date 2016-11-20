@@ -28,7 +28,7 @@ public class NoteService {
 			persistetNote = noteRepository.findByTitleAndUserIdAndType(note.getTitle(), note.getUserId(), NoteType.TITLED);
 		}
 		if (persistetNote.isPresent()) {
-			persistetNote.get().addMessage(note.getLastMessage());
+			persistetNote.get().addMessage(note.getLastMessage().getText());
 			return UpsertNoteResult.UPDATED;
 		} else {
 			noteRepository.save(note);

@@ -5,7 +5,6 @@ import java.text.MessageFormat;
 import org.springframework.stereotype.Component;
 
 import pl.dziedziul.matternotes.command.Action;
-import pl.dziedziul.matternotes.domain.Message;
 import pl.dziedziul.matternotes.domain.Note;
 import pl.dziedziul.matternotes.domain.NoteType;
 import pl.dziedziul.matternotes.domain.service.NoteService;
@@ -60,18 +59,16 @@ public class NewCommandHandler extends ActionBasedCommandHandler {
 	}
 
 	private Note createNote(SlashCommand command) {
-		Message message = new Message();
 		Note note = new Note();
 		MessageArguments args = messageArgumentParser.parse(command.getText());
 		boolean hasTitle = args.hasTitle();
-		message.setText(args.getText());
-		note.setTitle(hasTitle ? args.getTitle() : command.getChannelName());//will it be filled in case direct messages?
+		note.setTitle(hasTitle ? args.getTitle() : command.getChannelName());//will it be filled in case of direct messages?
 		note.setUsername(command.getUsername());
 		note.setUserId(command.getUserId());
 		note.setType(hasTitle ? NoteType.TITLED : NoteType.CHANNEL);
 		note.setChannelName(command.getChannelName());
 		note.setChannelId(command.getChannelId());
-		note.addMessage(message);
+		note.addMessage(args.getText());
 		return note;
 	}
 

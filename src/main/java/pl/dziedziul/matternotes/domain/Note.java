@@ -137,7 +137,8 @@ public class Note extends AbstractEntity {
 		this.userId = userId;
 	}
 
-	public void addMessage(Message message) {
+	public void addMessage(String text) {
+		Message message = new Message(text);
 		messages.add(message);
 		message.setNote(this);
 	}
