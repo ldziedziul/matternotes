@@ -63,12 +63,12 @@ public class ShowCommandHandler extends ActionBasedCommandHandler {
 	}
 
 	private Optional<Note> getSingleNote(SlashCommand command, MessageArguments args) {
-		Note note = new Note();
-		note.setTitle(args.getTitle());
-		note.setUserId(command.getUserId());
-		note.setType(args.hasTitle() ? NoteType.TITLED : NoteType.CHANNEL);
-		note.setChannelId(command.getChannelId());
-		return noteService.getNoteByExample(note);
+		NoteSearchParams searchParams = new NoteSearchParams();
+		searchParams.setTitle(args.getTitle());
+		searchParams.setUserId(command.getUserId());
+		searchParams.setType(args.hasTitle() ? NoteType.TITLED : NoteType.CHANNEL);
+		searchParams.setChannelId(command.getChannelId());
+		return noteService.getNote(searchParams);
 	}
 
 	@Override

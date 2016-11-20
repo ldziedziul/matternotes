@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import pl.dziedziul.matternotes.command.handler.NoteSearchParams;
 import pl.dziedziul.matternotes.domain.Note;
 import pl.dziedziul.matternotes.domain.NoteRepository;
 import pl.dziedziul.matternotes.domain.NoteType;
@@ -23,7 +24,7 @@ public class NoteService {
 	@Transactional
 	public UpsertNoteResult upsertNote(Note note) {
 		Optional<Note> persistetNote;
-		persistetNote = findNote(note);
+		persistetNote = findNote(NoteSearchParams.of(note));
 		if (persistetNote.isPresent()) {
 			persistetNote.get().addMessage(note.getLastMessage().getText());
 			return UpsertNoteResult.UPDATED;
@@ -33,19 +34,19 @@ public class NoteService {
 		}
 	}
 
-	private Optional<Note> findNote(Note note) {
+	private Optional<Note> findNote(NoteSearchParams searchParams) {
 		Optional<Note> persistetNote;
-		if (note.getType().equals(NoteType.CHANNEL)) {
-			persistetNote = noteRepository.findByChannelIdAndUserIdAndType(note.getChannelId(), note.getUserId(), note.getType());
+		if (searchParams.getType().equals(NoteType.CHANNEL)) {
+			persistetNote = noteRepository.findByChannelIdAndUserIdAndType(searchParams.getChannelId(), searchParams.getUserId(), searchParams.getType());
 		} else {
-			persistetNote = noteRepository.findByTitleAndUserIdAndType(note.getTitle(), note.getUserId(), note.getType());
+			persistetNote = noteRepository.findByTitleAndUserIdAndType(searchParams.getTitle(), searchParams.getUserId(), searchParams.getType());
 		}
 		return persistetNote;
 	}
 
 	@Transactional(readOnly = true)
-	public Optional<Note> getNoteByExample(Note noteExample) {
-		return findNote(noteExample);
+	public Optional<Note> getNote(NoteSearchParams searchParams) {
+		return findNote(searchParams);
 	}
 
 	public List<Note> getAllNotes(String userId) {

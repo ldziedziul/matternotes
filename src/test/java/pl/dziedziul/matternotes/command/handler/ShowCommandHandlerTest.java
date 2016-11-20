@@ -54,7 +54,7 @@ public class ShowCommandHandlerTest {
 		//given
 		when(messageArgumentParser.parse(anyString())).thenReturn(new MessageArguments("title", ""));
 		Note persistentNote = testDataBuilder.createValidNoteWith2Message(NoteType.TITLED);
-		when(noteService.getNoteByExample(any())).thenReturn(Optional.of(persistentNote));
+		when(noteService.getNote(any())).thenReturn(Optional.of(persistentNote));
 		when(noteRenderer.render(persistentNote)).thenReturn("some rendered text");
 		//when
 		SlashCommandResult result = sut.handle(mock(SlashCommand.class));

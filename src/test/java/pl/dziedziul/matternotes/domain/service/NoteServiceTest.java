@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import org.junit.Test;
 
+import pl.dziedziul.matternotes.command.handler.NoteSearchParams;
 import pl.dziedziul.matternotes.domain.Note;
 import pl.dziedziul.matternotes.domain.NoteRepository;
 import pl.dziedziul.matternotes.domain.NoteType;
@@ -81,7 +82,7 @@ public class NoteServiceTest {
 		NoteService noteService = new NoteService(noteRepository);
 		Note persistedNote = setupPersistedChannelNote(noteRepository);
 		//when
-		Optional<Note> result = noteService.getNoteByExample(createNoteSearchParams(NoteType.CHANNEL));
+		Optional<Note> result = noteService.getNote(createNoteSearchParams(NoteType.CHANNEL));
 		//then
 		assertTrue(result.isPresent());
 		assertThat(result.get(), is(persistedNote));
@@ -95,17 +96,17 @@ public class NoteServiceTest {
 		NoteService noteService = new NoteService(noteRepository);
 		Note persistedNote = setupPersistedTitleNote(noteRepository);
 		//when
-		Optional<Note> result = noteService.getNoteByExample(createNoteSearchParams(NoteType.TITLED));
+		Optional<Note> result = noteService.getNote(createNoteSearchParams(NoteType.TITLED));
 		//then
 		assertTrue(result.isPresent());
 		assertThat(result.get(), is(persistedNote));
 		verify(noteRepository).findByTitleAndUserIdAndType(any(), any(), eq(NoteType.TITLED));
 	}
 
-	private Note createNoteSearchParams(NoteType noteType) {
-		Note note = new Note();
-		note.setType(noteType);
-		return note;
+	private NoteSearchParams createNoteSearchParams(NoteType noteType) {
+		NoteSearchParams searchParams = new NoteSearchParams();
+		searchParams.setType(noteType);
+		return searchParams;
 	}
 
 	private Note setupPersistedChannelNote(NoteRepository noteRepository) {
