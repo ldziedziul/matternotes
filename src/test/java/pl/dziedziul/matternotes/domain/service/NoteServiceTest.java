@@ -36,9 +36,7 @@ public class NoteServiceTest {
 		//given
 		NoteRepository noteRepository = mock(NoteRepository.class);
 		NoteService noteService = new NoteService(noteRepository);
-		Note persistedNote = new Note();
-		assertThat(persistedNote.getMessages(), is(empty()));
-		when(noteRepository.findByTitleAndUserIdAndType(any(), any(), eq(NoteType.TITLED))).thenReturn(Optional.of(persistedNote));
+		Note persistedNote = setupPersistedTitleNote(noteRepository);
 		//when
 		Note noteToSave = testDataBuilder.createValidNoteWithSingleMessage(NoteType.TITLED);
 		UpsertNoteResult result = noteService.upsertNote(noteToSave);
@@ -66,15 +64,59 @@ public class NoteServiceTest {
 		//given
 		NoteRepository noteRepository = mock(NoteRepository.class);
 		NoteService noteService = new NoteService(noteRepository);
-		Note persistedNote = new Note();
-		assertThat(persistedNote.getMessages(), is(empty()));
-		when(noteRepository.findByChannelIdAndUserIdAndType(any(), any(), eq(NoteType.CHANNEL))).thenReturn(Optional.of(persistedNote));
+		Note persistedNote = setupPersistedChannelNote(noteRepository);
 		//when
-		Note noteToSave = testDataBuilder.createValidNote(NoteType.CHANNEL);
+		Note noteToSave = testDataBuilder.createValidNoteWithSingleMessage(NoteType.CHANNEL);
 		UpsertNoteResult result = noteService.upsertNote(noteToSave);
 		//then
 		assertThat(result, is(UpsertNoteResult.UPDATED));
 		assertThat(persistedNote.getMessages(), hasSize(1));
 	}
 
+
+	@Test
+	public void shouldFindChannelNote() throws Exception {
+		//given
+		NoteRepository noteRepository = mock(NoteRepository.class);
+		NoteService noteService = new NoteService(noteRepository);
+		Note persistedNote = setupPersistedChannelNote(noteRepository);
+		//when
+		Optional<Note> result = noteService.getNoteByExample(createNoteSearchParams(NoteType.CHANNEL));
+		//then
+		assertTrue(result.isPresent());
+		assertThat(result.get(), is(persistedNote));
+		verify(noteRepository).findByChannelIdAndUserIdAndType(any(), any(), eq(NoteType.CHANNEL));
+	}
+
+	@Test
+	public void shouldFindTitledNote() throws Exception {
+		//given
+		NoteRepository noteRepository = mock(NoteRepository.class);
+		NoteService noteService = new NoteService(noteRepository);
+		Note persistedNote = setupPersistedTitleNote(noteRepository);
+		//when
+		Optional<Note> result = noteService.getNoteByExample(createNoteSearchParams(NoteType.TITLED));
+		//then
+		assertTrue(result.isPresent());
+		assertThat(result.get(), is(persistedNote));
+		verify(noteRepository).findByTitleAndUserIdAndType(any(), any(), eq(NoteType.TITLED));
+	}
+
+	private Note createNoteSearchParams(NoteType noteType) {
+		Note note = new Note();
+		note.setType(noteType);
+		return note;
+	}
+
+	private Note setupPersistedChannelNote(NoteRepository noteRepository) {
+		Note persistedNote = new Note();
+		when(noteRepository.findByChannelIdAndUserIdAndType(any(), any(), eq(NoteType.CHANNEL))).thenReturn(Optional.of(persistedNote));
+		return persistedNote;
+	}
+
+	private Note setupPersistedTitleNote(NoteRepository noteRepository) {
+		Note persistedNote = new Note();
+		when(noteRepository.findByTitleAndUserIdAndType(any(), any(), eq(NoteType.TITLED))).thenReturn(Optional.of(persistedNote));
+		return persistedNote;
+	}
 }

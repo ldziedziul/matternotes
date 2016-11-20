@@ -3,6 +3,7 @@ package pl.dziedziul.matternotes.domain;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -122,6 +123,35 @@ public class NoteRepositoryTest {
 		Optional<Note> result = noteRepository.findByTitleAndUserIdAndType("channelId-1", "some-other-user-id", NoteType.TITLED);
 		//then
 		assertFalse(result.isPresent());
+	}
+
+	@Test
+	public void shouldFindAllNotes() throws Exception {
+		//given
+		prepareSampleNotes();
+		//when
+		List<Note> notes = noteRepository.findAllByUserIdOrderByTitle("some-user-id");
+		//then
+		assertThat(notes, hasSize(5));
+	}
+
+	@Test
+	public void shouldNotFindAnyNotesWhenNonWritingUser() throws Exception {
+		//given
+		prepareSampleNotes();
+		//when
+		List<Note> notes = noteRepository.findAllByUserIdOrderByTitle("some-non-writing-user-id");
+		//then
+		assertThat(notes, hasSize(0));
+	}
+
+	@Test
+	public void shouldNotFindAnyNotesWhenNoNotes() throws Exception {
+		//given
+		//when
+		List<Note> notes = noteRepository.findAllByUserIdOrderByTitle("some-user-id");
+		//then
+		assertThat(notes, is(empty()));
 	}
 
 	private void prepareSampleNotes() {
