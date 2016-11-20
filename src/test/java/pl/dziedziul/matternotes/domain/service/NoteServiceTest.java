@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.*;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -16,6 +19,7 @@ import pl.dziedziul.matternotes.domain.NoteType;
 import pl.dziedziul.matternotes.domain.TestDataBuilder;
 
 public class NoteServiceTest {
+	private static final String SOME_USER_ID = "some-user-id";
 	private TestDataBuilder testDataBuilder = TestDataBuilder.getInstance();
 
 	@Test
@@ -66,12 +70,13 @@ public class NoteServiceTest {
 		NoteRepository noteRepository = mock(NoteRepository.class);
 		NoteService noteService = new NoteService(noteRepository);
 		Note persistedNote = setupPersistedChannelNote(noteRepository);
+		assertThat(persistedNote.getMessages(), hasSize(1));
 		//when
 		Note noteToSave = testDataBuilder.createValidNoteWithSingleMessage(NoteType.CHANNEL);
 		UpsertNoteResult result = noteService.upsertNote(noteToSave);
 		//then
 		assertThat(result, is(UpsertNoteResult.UPDATED));
-		assertThat(persistedNote.getMessages(), hasSize(1));
+		assertThat(persistedNote.getMessages(), hasSize(2));
 	}
 
 
@@ -87,6 +92,21 @@ public class NoteServiceTest {
 		assertTrue(result.isPresent());
 		assertThat(result.get(), is(persistedNote));
 		verify(noteRepository).findByChannelIdAndUserIdAndType(any(), any(), eq(NoteType.CHANNEL));
+	}
+
+	@Test
+	public void shouldFindAllNotes() throws Exception {
+		//given
+		NoteRepository noteRepository = mock(NoteRepository.class);
+		NoteService noteService = new NoteService(noteRepository);
+		List<Note> persistedNotes = Collections.unmodifiableList(Arrays.asList(new Note(), new Note()));
+		when(noteRepository.findAllByUserIdOrderByTitle(SOME_USER_ID)).thenReturn(persistedNotes);
+		//when
+		List<Note> allNotes = noteService.getAllNotes(SOME_USER_ID);
+		//then
+		assertNotNull(allNotes);
+		assertThat(allNotes, is(persistedNotes));
+		verify(noteRepository).findAllByUserIdOrderByTitle(SOME_USER_ID);
 	}
 
 	@Test
@@ -111,6 +131,7 @@ public class NoteServiceTest {
 
 	private Note setupPersistedChannelNote(NoteRepository noteRepository) {
 		Note persistedNote = new Note();
+		persistedNote.addMessage("some-message");
 		when(noteRepository.findByChannelIdAndUserIdAndType(any(), any(), eq(NoteType.CHANNEL))).thenReturn(Optional.of(persistedNote));
 		return persistedNote;
 	}
@@ -134,7 +155,7 @@ public class NoteServiceTest {
 	}
 
 	@Test
-	public void shouldIgnoreNonexistingNote() throws Exception {
+	public void shouldIgnoreNonexistingNoteWhenDeleting() throws Exception {
 		//given
 		NoteRepository noteRepository = mock(NoteRepository.class);
 		NoteService noteService = new NoteService(noteRepository);
@@ -145,4 +166,44 @@ public class NoteServiceTest {
 		verify(noteRepository).findByChannelIdAndUserIdAndType(any(), any(), any());
 		verifyNoMoreInteractions(noteRepository);
 	}
+
+	@Test
+	public void shouldDeleteNoteWithSingleMessageWhenUndoLastModification() throws Exception {
+		//given
+		NoteRepository noteRepository = mock(NoteRepository.class);
+		NoteService noteService = new NoteService(noteRepository);
+		Note persistedNote = setupPersistedChannelNote(noteRepository);
+		//when
+		noteService.undoLastModification(createNoteSearchParams(NoteType.CHANNEL));
+		//then
+		verify(noteRepository).delete(persistedNote);
+
+	}
+
+	@Test
+	public void shouldDeleteMessageFromNoteWithMultipleMessagesWhenUndoLastModification() throws Exception {
+		//given
+		NoteRepository noteRepository = mock(NoteRepository.class);
+		NoteService noteService = new NoteService(noteRepository);
+		Note persistedNote = setupPersistedChannelNote(noteRepository);
+		persistedNote.addMessage("second-message");
+		//when
+		noteService.undoLastModification(createNoteSearchParams(NoteType.CHANNEL));
+		//then
+		verify(noteRepository, never()).delete(persistedNote);
+	}
+
+	@Test
+	public void shouldIgnoreNonexistingNoteWhenUndoing() throws Exception {
+		//given
+		NoteRepository noteRepository = mock(NoteRepository.class);
+		NoteService noteService = new NoteService(noteRepository);
+		when(noteRepository.findByChannelIdAndUserIdAndType(any(), any(), eq(NoteType.CHANNEL))).thenReturn(Optional.empty());
+		//when
+		noteService.undoLastModification(createNoteSearchParams(NoteType.CHANNEL));
+		//then
+		verify(noteRepository).findByChannelIdAndUserIdAndType(any(), any(), any());
+		verifyNoMoreInteractions(noteRepository);
+	}
+
 }

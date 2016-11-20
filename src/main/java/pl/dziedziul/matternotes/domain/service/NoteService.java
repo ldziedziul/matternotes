@@ -49,6 +49,7 @@ public class NoteService {
 		return findNote(searchParams);
 	}
 
+	@Transactional(readOnly = true)
 	public List<Note> getAllNotes(String userId) {
 		return noteRepository.findAllByUserIdOrderByTitle(userId);
 	}
@@ -56,5 +57,18 @@ public class NoteService {
 	@Transactional
 	public void deleteByExample(NoteSearchParams searchParams) {
 		findNote(searchParams).ifPresent(noteRepository::delete);
+	}
+
+	@Transactional
+	public void undoLastModification(NoteSearchParams searchParams) {
+		Optional<Note> optionalNote = findNote(searchParams);
+		if (optionalNote.isPresent()) {
+			Note note = optionalNote.get();
+			if (note.getMessages().size() > 1) {
+				note.deleteLastMessage();
+			} else {
+				noteRepository.delete(note);
+			}
+		}
 	}
 }
