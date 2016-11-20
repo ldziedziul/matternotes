@@ -27,7 +27,7 @@ public class HelpCommandHandler extends ActionBasedCommandHandler {
 			"/notes undo | Removes your latest note for the current channel. Your latest appended message will be deleted\n" +
 			"/notes undo [title] | Removes your latest note for the 'title' notepad. Your latest appended message will be deleted\n" +
 			"/notes help | Displays this (hopefully) helpful list of commands\n" +
-			"/notes feedback | Shows link to matternotes github repository";
+			"/notes about | Shows some information about matternotes";
 		return new SlashCommandResult(message);
 	}
 }

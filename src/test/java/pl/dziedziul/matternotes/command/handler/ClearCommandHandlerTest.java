@@ -33,7 +33,7 @@ public class ClearCommandHandlerTest {
 		//given
 		//when
 		SlashCommand command = mock(SlashCommand.class);
-		when(command.getAction()).thenReturn(Action.FEEDBACK);
+		when(command.getAction()).thenReturn(Action.ABOUT);
 		boolean supporting = sut.isSupporting(command);
 		//then
 		assertFalse(supporting);

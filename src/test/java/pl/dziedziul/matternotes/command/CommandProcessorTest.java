@@ -23,7 +23,7 @@ public class CommandProcessorTest {
 	@Before
 	public void setup() {
 		actionExtractor = mock(CommandActionExtractor.class);
-		when(actionExtractor.extractAction(any())).thenReturn(Action.FEEDBACK);
+		when(actionExtractor.extractAction(any())).thenReturn(Action.ABOUT);
 	}
 
 	@Test(expected = IllegalStateException.class)

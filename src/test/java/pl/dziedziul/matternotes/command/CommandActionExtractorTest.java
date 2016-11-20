@@ -24,7 +24,7 @@ public class CommandActionExtractorTest {
 			{ "undo", Action.UNDO }, //
 			{ "undo [title]", Action.UNDO }, //
 			{ "help", Action.HELP }, //
-			{ "feedback", Action.FEEDBACK }, //
+			{ "about", Action.ABOUT }, //
 			{ "", Action.HELP }, //
 		};
 	}

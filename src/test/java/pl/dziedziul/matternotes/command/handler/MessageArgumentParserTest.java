@@ -30,7 +30,7 @@ public class MessageArgumentParserTest {
 			{ "undo", new MessageArguments("", "") },//
 			{ "undo [title]", new MessageArguments("title", "") },//
 			{ "help", new MessageArguments("", "") },//
-			{ "feedback", new MessageArguments("", "") },//
+			{ "about", new MessageArguments("", "") },//
 			{ null, new MessageArguments("", "") },//
 		};
 	}
